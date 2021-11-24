@@ -28,110 +28,41 @@
 </head>
 <body>
   <div id="app" class="theme-dark">
-    <!-- Left panel with cover effect-->
-    <div class="panel panel-left panel-cover theme-dark panel-init">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Menu</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="list">
-              <ul>
-                <li>
-                  <a href="/about/" class="item-content item-link">
-                    <div class="item-inner">
-                      <div class="item-title">About</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="/form/" class="item-content item-link">
-                    <div class="item-inner">
-                      <div class="item-title">Form</div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-  
-          </div>
+    <div class=" views tabs safe-areas">
+      <!-- Tabbar for switching views-tabs -->
+      <div class="toolbar toolbar-bottom tabbar-labels">
+        <div class="toolbar-inner">
+          <a href="#view-home" class="tab-link tab-link-active">
+            <i class="icon f7-icons if-not-md">house_fill</i>
+            <i class="icon material-icons if-md">home</i>
+            <span class="tabbar-label">Home</span>
+          </a>
+          <a href="#view-catalog" class="tab-link">
+            <i class="icon f7-icons if-not-md">square_list_fill</i>
+            <i class="icon material-icons if-md">view_list</i>
+            <span class="tabbar-label">Catalog</span>
+          </a>
+          <a href="#view-settings" class="tab-link">
+            <i class="icon f7-icons if-not-md">gear</i>
+            <i class="icon material-icons if-md">settings</i>
+            <span class="tabbar-label">Settings</span>
+          </a>
         </div>
       </div>
-    </div>
-    <!-- Your main view, should have "view-main" class -->
-    <div class="view view-main view-init safe-areas">
-      <div class="page" data-name="home">
-        <!-- Top Navbar -->
-        <div class="navbar navbar-large">
-          <div class="navbar-bg"></div>
-          <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="link icon-only panel-open" data-panel="left">
-                <i class="icon f7-icons if-not-md">menu</i>
-                <i class="icon material-icons if-md">menu</i>
-              </a>
-            </div>
-            <div class="title sliding">Livre de recettes</div>
-            <div class="title-large">
-              <div class="title-large-text">Livre de recettes</div>
-            </div>
-          </div>
-        </div>
-        <!-- Toolbar-->
-        <div class="toolbar toolbar-bottom">
-          <div class="toolbar-inner">
 
-          </div>
-        </div>
-        <!-- Scrollable page content-->
-        <div class="page-content">
-          <div class="block-title">Recettes</div>
-          <div class="list media-list">
-            <ul>
-              <li>
-                <a href="#" class="item-link item-content">
-                  <div class="item-media"><img src="https://www.themealdb.com/images/media/meals/rvxxuy1468312893.jpg"width="80" /></div>
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">Vegan Lasagna</div>
-                    </div>
-                    <div class="item-subtitle">Vegan</div>
-                    <div class="item-text">Preheat oven to 180 degrees celcius. Boil vegetables for 5-7 minutes, until soft. 
-                    Add lentils and bring to a gentle simmer, adding a stock cube if desired. Continue cooking and stirring until the 
-                    lentils are soft, which should take about 20 minutes. Blanch spinach leaves for a few minutes in a pan, 
-                    before removing and setting aside. Top up the pan with water and cook the lasagne sheets. When cooked, 
-                    drain and set aside. To make the sauce, melt the butter and add the flour, then gradually add the soya 
-                    milk along with the mustard and the vinegar. Cook and stir until smooth and then assemble the lasagne as desired 
-                    in a baking dish. Bake in the preheated oven for about 25 minutes.</div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="item-link item-content">
-                  <div class="item-media"><img src="https:\/\/www.themealdb.com\/images\/media\/meals\/xr0n4r1576788363.jpg"width="80" /></div>
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">Lasagna Sandwiches</div>
-                    </div>
-                    <div class="item-subtitle">Pasta</div>
-                    <div class="item-text">In a small bowl, combine the first four ingredients; spread on four slices of bread. 
-                      Layer with bacon, tomato and cheese; top with remaining bread. In a large skillet or griddle, melt 2 
-                      tablespoons butter. Toast sandwiches until lightly browned on both sides and cheese is melted, adding 
-                      butter if necessary.</div>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+      <div id="view-home" class="view view-main view-init tab tab-active" data-name="home" data-url="/home/"></div>
+
+      <!-- Catalog View -->
+      <div id="view-catalog" class="view view-init tab view-catalog" data-name="catalog" data-url="/catalog/">
+        <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
+      </div>
+
+      <!-- Settings View -->
+      <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/">
+        <!-- Settings page will be loaded here dynamically from /settings/ route -->
       </div>
     </div>
-  </div>
-</div>
   <!-- CORDOVA_PLACEHOLDER_DONT_REMOVE -->
   <!-- Framework7 library -->
   <script src="framework7/framework7-bundle.min.js"></script>
