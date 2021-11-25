@@ -63,6 +63,7 @@ export default (props, { $f7, $on }) => {
             },
             success: function (res) {
             // res correspond à la réponse
+            $('.list-search').empty();
               res.meals.forEach(meal => {
                 //console.log(meal);
                 $('.list-search').append(`<li>
