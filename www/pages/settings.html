@@ -26,6 +26,15 @@
   </div>
 </div>
 <script>
+var toggle = app.toggle.get('.toggle');
 
+if (toggle.checked) {
+  console.log("checked");
+  changeTheme("theme-light");
+}
+else {
+  console.log("not checked");
+  changeTheme("theme-dark");
+}
 
 </script>

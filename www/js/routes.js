@@ -30,10 +30,19 @@ var routes = [
           },
           success: function (res) {
             // res correspond à la réponse
-            //console.log(res);
-            $('.recipe-name').html(res.meals[0].strMeal)
-            $('.recipe-instructions').html(res.meals[0].strInstructions)
+            console.log(res);
+            $('.recipe-name').html(res.meals[0].strMeal);
+            $('.recipe-instructions').html(res.meals[0].strInstructions);
             $('.recette-thumbnail').attr('src', res.meals[0].strMealThumb );
+            $('.recipe-ingredient1').html(res.meals[0].strIngredient1);
+            $('.recipe-measure1').html(res.meals[0].strMeasure1);
+            for(var i=1;i<21;i++){
+                $('.ingredients-list').append(`<div class="chip">
+                  <div class="chip-label">${res.meals[0].strIngredient1}</div>
+                  <div class="chip-label"> | </div>
+                  <div class="chip-label">${res.meals[0].strmeasure1}</div>
+                  </div>`)
+            }
 
             // Je ferme le loader
             app.dialog.close();
