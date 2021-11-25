@@ -9,12 +9,12 @@
           <span class="if-not-md">Back</span>
         </a>
       </div>
-      <div class="title">Search Bar</div>
+      <div class="title">Home</div>
         <div class="subnavbar">
           <form class="searchbar">
             <div class="searchbar-inner">
               <div class="searchbar-input-wrap">
-                <input type="search" placeholder="Search" />
+                <input type="search" placeholder="Search"/>
                 <i class="searchbar-icon"></i>
                 <span class="input-clear-button"></span>
               </div>
@@ -24,17 +24,66 @@
         </div>
       </div>
     </div>
-  </div>
   <!-- Scrollable page content-->
   <div class="page-content">
     <div class="searchbar-backdrop"></div>
       <div class="block searchbar-hide-on-search">
-        <p>This block will be hidden on search. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        <p>You can search for recipes here or in the catalog</p>
+      </div>
+      <div class="list searchbar-found">
+        <ul class="list-search">
+          
+        </ul>
+      </div>
+      <div class="block searchbar-not-found">
+        <div class="block-inner">Nothing found</div>
       </div>
     
   </div>
 </div>
 </template>
 <script>
-
+export default (props, { $f7, $on }) => {
+    $on('pageInit', () => {
+      // create searchbar
+      var searchbar = $f7.searchbar.create({
+        el: '.searchbar',
+        searchContainer: '.list',
+        searchIn: '.item-title',
+        on: {
+          search(sb, query, previousQuery) {
+          app.request({
+            url: "https://themealdb.com/api/json/v1/1/search.php?s=" + query, //URL de L'api
+            method: "GET", // Méthode 
+            dataType: "json", // Important, sinon vous allez récupérer un string et non un objet
+            beforeSend: function () {
+            // Avant de récupérer mes datas, j'affiche un loader 
+            //(important quand on fait un traitement pour montrer qu'il est en cours +  empêcher les impatients de cliquer partout pendant le process !)
+              app.dialog.preloader();
+            },
+            success: function (res) {
+            // res correspond à la réponse
+              res.meals.forEach(meal => {
+                //console.log(meal);
+                $('.list-search').append(`<li>
+                <a href="/recette/${meal.idMeal}/" class="item-link item-content recette-link">
+                <div class="item-media"><img src="${meal.strMealThumb}" width="100" /></div>
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title"> ${meal.strMeal} </div>
+                  </div>
+                  </div>
+                </a>
+                </li>`)
+            });
+            // Je ferme le loader
+            app.dialog.close();
+          },
+        });
+          }
+        }
+      });
+    })
+    return $render;
+  }
 </script>

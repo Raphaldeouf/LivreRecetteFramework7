@@ -9,15 +9,16 @@ var routes = [
     path: '/home/',
     componentUrl: './pages/home.html',
   },
+
   {
     path: '/recette/:recetteId/',
     url: "./pages/recette.html",
     on: {
-      pageAfterIn: function(e, page){
+      pageInit: function(e, page){
         var router = this;
         var app = router.app;
         var recipeId = page.route.params.recetteId;
-        console.log(recipeId);
+        //console.log(recipeId);
         app.request({
           url: "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + recipeId, //URL de L'api
           method: "GET", // Méthode 
@@ -46,7 +47,7 @@ var routes = [
     path: '/categories/:categorieId/',
     url: "./pages/categories.html",
     on: {
-      pageAfterIn: function(e, page){
+      pageInit: function(e, page){
         var router = this;
         var app = router.app;
         var categorieId = page.route.params.categorieId;
@@ -95,7 +96,7 @@ var routes = [
     path: '/catalog/',
     url: "./pages/catalog.html",
     on: {
-      pageAfterIn: function(e, page){
+      pageInit: function(e, page){
         var router = this;
         var app = router.app;
         app.request({
