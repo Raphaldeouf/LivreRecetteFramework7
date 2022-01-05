@@ -3,9 +3,20 @@ name: Deploiement de notre application
 on:
   push: 
     branches: 
-      - main
+      - develop
       
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+     
+    steps:
+      - name: Testing
+        run: npm run test
 
+on:
+  pull_request: 
+      
 jobs:
   deploy:
     name: Deploy app
