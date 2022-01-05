@@ -1,0 +1,65 @@
+name: Deploiement de notre application
+
+on:
+  push: 
+    branches: 
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.JAVA_HOME }}/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Clean cordova
+        run: cordova clean
+
+      - name: Create .firebaserc file
+        id: firebaserc
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: ".firebaserc"
+          encodedString: ${{ secrets.FIREBASERC }}
+
+      - name: Move .firebaserc into project
+        run: |
+          mv ${{ steps.firebaserc.outputs.filePath }} ./
+      - name: 'Build Web App'
+        run: cordova build
+
+      - name: Deploy to Firebase Hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
