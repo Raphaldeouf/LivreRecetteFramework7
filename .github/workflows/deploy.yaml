@@ -43,22 +43,22 @@ jobs:
       #    restore-keys: ${{ runner.os }}-pub-
 
 
-     # - name: Import pub dependencies
+      #- name: Import pub dependencies
       #  run: java pub get
 
-      - name: Create .firebaserc file
-        id: firebaserc
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: ".firebaserc"
-          encodedString: ${{ secrets.FIREBASERC }}
+      #- name: Create .firebaserc file
+      #  id: firebaserc
+      #  uses: timheuer/base64-to-file@v1
+      #  with:
+      #    fileName: ".firebaserc"
+      #    encodedString: ${{ secrets.FIREBASERC }}
 
-      - name: Move .firebaserc into project
-        run: |
-          mv ${{ steps.firebaserc.outputs.filePath }} ./
+      #- name: Move .firebaserc into project
+      #  run: |
+      #    mv ${{ steps.firebaserc.outputs.filePath }} ./
 
-      - name: 'Build Web App'
-        run: cordova build
+      #- name: 'Build Web App'
+      #  run: cordova build
 
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
