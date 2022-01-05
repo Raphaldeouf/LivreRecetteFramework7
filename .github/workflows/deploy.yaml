@@ -1,4 +1,4 @@
-name: Deploiement de notre application
+name: Test au push sur develop
 
 on:
   push: 
@@ -13,22 +13,3 @@ jobs:
     steps:
       - name: Testing
         run: npm run test
-
-on:
-  pull_request: 
-      
-jobs:
-  deploy:
-    name: Deploy app
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
