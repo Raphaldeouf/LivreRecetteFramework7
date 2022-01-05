@@ -41,6 +41,9 @@ jobs:
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-pub-
 
+      - name: Import pub dependencies
+        run: java pub get
+
       - name: Create .firebaserc file
         id: firebaserc
         uses: timheuer/base64-to-file@v1
