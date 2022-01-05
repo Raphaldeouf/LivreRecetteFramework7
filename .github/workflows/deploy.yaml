@@ -23,6 +23,7 @@ jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-20.04
+    needs: [test] 
 
     steps:
       - name: Checkout
@@ -37,7 +38,7 @@ jobs:
       - name: Cache pub dependencies
         uses: actions/cache@v2
         with:
-          path: ${{ env.ANROID_HOME }}/.pub-cache
+          path: ${{ env.JAVA_HOME }}/.pub-cache
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-pub-
 
@@ -55,6 +56,7 @@ jobs:
       - name: Move .firebaserc into project
         run: |
           mv ${{ steps.firebaserc.outputs.filePath }} ./
+
       - name: 'Build Web App'
         run: cordova build
 
