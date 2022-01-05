@@ -2,69 +2,147 @@
 var routes = [
   {
     path: '/',
-    url: './index.html',
-  },
-  {
-    path: '/about/',
-    url: './pages/about.html',
-  },
-  {
-    path: '/form/',
-    url: './pages/form.html',
+    url: '/index.html'
   },
 
-
   {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    componentUrl: './pages/dynamic-route.html',
+    path: '/home/',
+    componentUrl: './pages/home.html',
   },
+
   {
-    path: '/request-and-load/user/:userId/',
-    async: function ({ router, to, resolve }) {
-      // App instance
-      var app = router.app;
-
-      // Show Preloader
-      app.preloader.show();
-
-      // User ID from request
-      var userId = to.params.userId;
-
-      // Simulate Ajax Request
-      setTimeout(function () {
-        // We got user data from request
-        var user = {
-          firstName: 'Vladimir',
-          lastName: 'Kharlampidi',
-          about: 'Hello, i am creator of Framework7! Hope you like it!',
-          links: [
-            {
-              title: 'Framework7 Website',
-              url: 'http://framework7.io',
-            },
-            {
-              title: 'Framework7 Forum',
-              url: 'http://forum.framework7.io',
-            },
-          ]
-        };
-        // Hide Preloader
-        app.preloader.hide();
-
-        // Resolve route to load page
-        resolve(
-          {
-            componentUrl: './pages/request-and-load.html',
+    path: '/recette/:recetteId/',
+    url: "./pages/recette.html",
+    on: {
+      pageInit: function(e, page){
+        var router = this;
+        var app = router.app;
+        var recipeId = page.route.params.recetteId;
+        //console.log(recipeId);
+        app.request({
+          url: "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + recipeId, //URL de L'api
+          method: "GET", // Méthode 
+          dataType: "json", // Important, sinon vous allez récupérer un string et non un objet
+          beforeSend: function () {
+            // Avant de récupérer mes datas, j'affiche un loader 
+            //(important quand on fait un traitement pour montrer qu'il est en cours +  empêcher les impatients de cliquer partout pendant le process !)
+            app.dialog.preloader();
           },
-          {
-            props: {
-              user: user,
+          success: function (res) {
+            // res correspond à la réponse
+            console.log(res);
+            $('.recipe-name').html(res.meals[0].strMeal);
+            $('.recipe-instructions').html(res.meals[0].strInstructions);
+            $('.recette-thumbnail').attr('src', res.meals[0].strMealThumb );
+            for(var i=1;i<5;i++){
+              $('.ingredients-list').append(`<div class="chip">
+                <div class="chip-label">${res.meals[0].strIngredient1}</div>
+                <div class="chip-label"> | </div>
+                <div class="chip-label">${res.meals[0].strMeasure1}</div>
+              </div>`)
             }
-          }
-        );
-      }, 1000);
-    },
+
+            // Je ferme le loader
+            app.dialog.close();
+          },
+        });
+      }
+    }
   },
+
+  {
+    path: '/categories/:categorieId/',
+    url: "./pages/categories.html",
+    on: {
+      pageInit: function(e, page){
+        var router = this;
+        var app = router.app;
+        var categorieId = page.route.params.categorieId;
+        app.request({
+          url: "https://www.themealdb.com/api/json/v1/1/filter.php?c=" + categorieId, //URL de L'api
+          method: "GET", // Méthode 
+          dataType: "json", // Important, sinon vous allez récupérer un string et non un objet
+          beforeSend: function () {
+            // Avant de récupérer mes datas, j'affiche un loader 
+            //(important quand on fait un traitement pour montrer qu'il est en cours +  empêcher les impatients de cliquer partout pendant le process !)
+            app.dialog.preloader();
+          },
+          success: function (res) {
+            // res correspond à la réponse
+            //console.log(res.meals);
+            res.meals.forEach(meal => {
+              //console.log(meal);
+              $('.categorie-name').html(categorieId);
+
+              $('.categorie-list').append(`<li>
+              <a href="/recette/${meal.idMeal}/" class="item-link item-content recette-link">
+                <div class="item-media"><img src="${meal.strMealThumb}" width="100" /></div>
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title"> ${meal.strMeal} </div>
+                  </div>
+                </div>
+              </a>
+            </li>`)
+              
+            });
+            // Je ferme le loader
+            app.dialog.close();
+          },
+        });
+      }
+    }
+  },
+
+  {
+    path: '/settings/',
+    url: './pages/settings.html',
+  },
+
+  {
+    path: '/catalog/',
+    url: "./pages/catalog.html",
+    on: {
+      pageInit: function(e, page){
+        var router = this;
+        var app = router.app;
+        app.request({
+          url: "https://www.themealdb.com/api/json/v1/1/categories.php", //URL de L'api
+          method: "GET", // Méthode 
+          dataType: "json", // Important, sinon vous allez récupérer un string et non un objet
+          beforeSend: function () {
+            // Avant de récupérer mes datas, j'affiche un loader 
+            //(important quand on fait un traitement pour montrer qu'il est en cours +  empêcher les impatients de cliquer partout pendant le process !)
+            app.dialog.preloader();
+          },
+          success: function (res) {
+            // res correspond à la réponse
+            //console.log(res.categories);
+            res.categories.forEach(categorie => {
+              //console.log(categorie);
+                 
+              $('.catalog-list').append(`<li>
+              <a href="/categories/${categorie.strCategory}/" class="item-link item-content">
+                <div class="item-media"><img src="${categorie.strCategoryThumb}" width="100" /></div>
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title">${categorie.strCategory}</div>
+                  </div>
+                  <div class="item-text"> ${categorie.strCategoryDescription} </div>
+                </div>
+              </a>
+            </li> `)
+
+              
+            });
+            // Je ferme le loader
+            app.dialog.close();
+          },
+        });
+      }
+    }
+  },
+  
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',

@@ -1,0 +1,40 @@
+<div class="page" data-name="about">
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="if-not-md">Back</span>
+        </a>
+      </div>
+      <div class="title">Settings</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="list simple-list">
+      <ul>
+        <li>
+          <span>Light mode</span>
+          <label class="toggle toggle-init">
+            <input type="checkbox"  />
+            <span class="toggle-icon"></span>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+var toggle = app.toggle.get('.toggle');
+
+if (toggle.checked) {
+  console.log("checked");
+  changeTheme("theme-light");
+}
+else {
+  console.log("not checked");
+  changeTheme("theme-dark");
+}
+
+</script>
