@@ -54,15 +54,14 @@ export default (props, { $f7, $on }) => {
           search(sb, query, previousQuery) {
           app.request({
             url: "https://themealdb.com/api/json/v1/1/search.php?s=" + query, //URL de L'api
-            method: "GET", // Méthode 
-            dataType: "json", // Important, sinon vous allez récupérer un string et non un objet
+            method: "GET", 
+            dataType: "json", 
             beforeSend: function () {
             // Avant de récupérer mes datas, j'affiche un loader 
             //(important quand on fait un traitement pour montrer qu'il est en cours +  empêcher les impatients de cliquer partout pendant le process !)
               app.dialog.preloader();
             },
             success: function (res) {
-            // res correspond à la réponse
             $('.list-search').empty();
               res.meals.forEach(meal => {
                 //console.log(meal);
