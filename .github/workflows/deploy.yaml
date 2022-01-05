@@ -37,7 +37,7 @@ jobs:
       - name: Cache pub dependencies
         uses: actions/cache@v2
         with:
-          path: ${{ env.JAVA_HOME }}/.pub-cache
+          path: ${{ env.ANROID_HOME }}/.pub-cache
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: ${{ runner.os }}-pub-
 
