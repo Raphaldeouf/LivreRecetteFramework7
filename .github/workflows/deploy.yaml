@@ -12,4 +12,4 @@ jobs:
      
     steps:
       - name: Testing
-        run: node www/js/test.js
+        run: npm run test
