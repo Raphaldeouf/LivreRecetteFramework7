@@ -21,6 +21,10 @@
             <span class="toggle-icon"></span>
           </label>
         </li>
+        <li>
+          <span>Increment</span>
+          <button class="col button button-fill" onclick="incremente()">Button</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -35,6 +39,15 @@ if (toggle.checked) {
 else {
   console.log("not checked");
   changeTheme("theme-dark");
+}
+
+function incremente() {
+  console.log("debut incremente");
+  const db = firebase.firestore();
+  const increment = firebase.firestore.FieldValue.increment(1);
+  const compteur = db.collection('increment').doc('compteur');
+  console.log(compteur);
+  compteur.update({ reads: increment });
 }
 
 </script>

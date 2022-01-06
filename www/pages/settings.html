@@ -21,11 +21,28 @@
             <span class="toggle-icon"></span>
           </label>
         </li>
+        <li>
+          <span>Increment</span>
+          <button  class="col button button-fill">Button</button>
+        </li>
       </ul>
     </div>
   </div>
 </div>
 <script>
+  
+  import * as firebase from 'firebase';
+  import 'firebase/auth';
+  
+  const config = {
+        apiKey: "AIzaSyAvzXtYEM7uO5IFKVYhJ0WGyTbY3lQq80o",
+        authDomain: "livrerecetteframework7.firebaseapp.com",
+        projectId: 'livrerecetteframework7',
+      };
+  
+  const app = firebase.initializeApp(config);
+  var db = app.firestore();
+
 var toggle = app.toggle.get('.toggle');
 
 if (toggle.checked) {
