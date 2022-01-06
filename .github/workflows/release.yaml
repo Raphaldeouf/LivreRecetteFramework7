@@ -2,7 +2,7 @@ name: Deploiement de notre application
 
 on:
   release:
-    types: [published]
+    type: [published]
       
 jobs:
   deploy:
