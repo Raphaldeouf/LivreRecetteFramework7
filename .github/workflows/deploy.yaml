@@ -11,8 +11,20 @@ jobs:
     runs-on: ubuntu-20.04
      
     steps:
-      - name: Install
-        run: npm install
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-      - name: Testing
-        run: npm run test
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+    - name: Install
+      run: npm install
+
+    - name: Testing
+      run: npm run test
