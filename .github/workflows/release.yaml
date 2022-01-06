@@ -1,7 +1,8 @@
 name: Deploiement de notre application
 
 on:
-  release: 
+  release:
+    [published]
       
 jobs:
   deploy:
