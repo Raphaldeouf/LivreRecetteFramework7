@@ -47,4 +47,15 @@ $('#my-login-screen .login-button').on('click', function () {
   function changeTheme(theme) {
     $('.theme').html(theme);
 }
+
 });
+
+function incremente() {
+  console.log("debut incremente");
+  var db = firebase.firestore();
+  console.log(db);
+  const compteur = db.collection('increment').doc('compteur');
+  const increment = db.FieldValue.increment(1);
+  console.log(compteur);
+  compteur.update({ reads: increment });
+}
